@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Input(props) {
     const { details, setDetails } = props;
-    const subjects = ["people", "planets", "starships"];
+    const subjects = ["people", "planets"];
     const [select, setSelect] = useState(subjects[0]);
     const [id, setId] = useState(1);
     const navi = useNavigate();

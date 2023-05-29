@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 
 export default function Render(props) {
@@ -48,7 +48,8 @@ export default function Render(props) {
                         <h3>Skin Color : </h3>
                         <p>{respBody.skin_color}</p>
                         <h3>Home World : </h3>
-                        <p>{homeWorldData.name}</p>
+                        <Link to={homeWorldData.url}>{homeWorldData.name}</Link>
+                        {/* <p>{homeWorldData.name}</p> */}
                     </div>
                 ) : (
                     <div>
