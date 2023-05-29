@@ -5,17 +5,59 @@ import axios from "axios";
 export default function Render(props) {
     const { select, id } = useParams();
     const [respBody, setRespBody] = useState({});
+    const [code, setCode] = useState();
 
     useEffect(() => {
-        axios.get(`https://swapi.dev/api/${select}/${id}`).then((resp) => {
-            setRespBody(resp.data);
-            // console.log(respBody);
-        });
+        axios
+            .get(`https://swapi.dev/api/${select}/${id}`)
+            .then((resp) => {
+                console.log(resp.status);
+                setCode(resp.status);
+                console.log(resp.data);
+                setRespBody(resp.data);
+                // console.log(respBody);
+            })
+            .catch((err) => {
+                console.log(err.response.status);
+                setCode(err.response.status);
+            });
     }, [select, id]);
 
     return (
         <div>
-            <h1>{respBody.name}</h1>
+            {code === 200 ? (
+                select === "people" ? (
+                    <div>
+                        <h1>{respBody.name}</h1>
+                        <br />
+                        <h3>Height : </h3>
+                        <p>{respBody.height}</p>
+                        <h3>Hair Color : </h3>
+                        <p>{respBody.hair_color}</p>
+                        <h3>Eye Color : </h3>
+                        <p>{respBody.eye_color}</p>
+                        <h3>Skin Color : </h3>
+                        <p>{respBody.skin_color}</p>
+                    </div>
+                ) : (
+                    <div>
+                        <h1>{respBody.name}</h1>
+                        <br />
+                        <h3>Climate : </h3>
+                        <p>{respBody.climate}</p>
+                        <h3>Terrain : </h3>
+                        <p>{respBody.terrain}</p>
+                        <h3>Surface Water : </h3>
+                        <p>{respBody.surface_water}</p>
+                        <h3>Population : </h3>
+                        <p>{respBody.population}</p>
+                    </div>
+                )
+            ) : (
+                <h1>Obi-Wan</h1>
+            )}
+
+            {/* <h1>{respBody.name}</h1> */}
         </div>
     );
 }
