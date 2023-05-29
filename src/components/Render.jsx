@@ -6,6 +6,7 @@ export default function Render(props) {
     const { select, id } = useParams();
     const [respBody, setRespBody] = useState({});
     const [code, setCode] = useState();
+    const [homeWorldData, setHomeWorldData] = useState({});
 
     useEffect(() => {
         axios
@@ -16,6 +17,14 @@ export default function Render(props) {
                 console.log(resp.data);
                 setRespBody(resp.data);
                 // console.log(respBody);
+                {
+                    if (select === "people") {
+                        axios.get(resp.data.homeworld).then((homeWorldResp) => {
+                            console.log(homeWorldResp.data);
+                            setHomeWorldData(homeWorldResp.data);
+                        });
+                    }
+                }
             })
             .catch((err) => {
                 console.log(err.response.status);
@@ -38,6 +47,8 @@ export default function Render(props) {
                         <p>{respBody.eye_color}</p>
                         <h3>Skin Color : </h3>
                         <p>{respBody.skin_color}</p>
+                        <h3>Home World : </h3>
+                        <p>{homeWorldData.name}</p>
                     </div>
                 ) : (
                     <div>
@@ -54,7 +65,14 @@ export default function Render(props) {
                     </div>
                 )
             ) : (
-                <h1>Obi-Wan</h1>
+                <>
+                    <h1>These aren't the droids you're looking for</h1>
+                    <img
+                        src="https://cdn.marvel.com/u/prod/marvel/i/mg/c/70/62f3e87ab6da3/clean.jpg"
+                        alt="Obi-Wan"
+                        style={{ width: "200px" }}
+                    />
+                </>
             )}
 
             {/* <h1>{respBody.name}</h1> */}
